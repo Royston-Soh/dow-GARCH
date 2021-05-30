@@ -171,7 +171,7 @@ s=ugarchspec(mean.model = list(armaOrder=c(0,0)),
 ![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/11%20News%20impact%20curve.jpg)
 
 ### Model 4: AR(1) gjrGARCH
-Adjusted Pearson Goodness-of-Fit Test: P-values are all lesser than 0.05, hence reject the null hypothesis that the model is a good fit
+Referring to the `Optimal Parameters`, we observe that the P-value for `ar1` is lesser than 0.05, and conclude that the inclusion of this parameter is stastically significant.
 ```bash
 s=ugarchspec(mean.model = list(armaOrder=c(1,0)),
              variance.model = list(model='gjrGARCH'),
@@ -187,19 +187,17 @@ s=ugarchspec(mean.model = list(armaOrder=c(0,0),
              distribution.model = 'sstd')
 ```
 
-We observe under 'Optimal Parameters' that coefficient archm is not statistically significant, hence, the addition of this variable does not improve the model.   Disregard model 5  
+We observe under `Optimal Parameters` that coefficient `archm` is not statistically significant, hence, the addition of this variable does not improve the model.   Disregard model 5  
 
-For models 1 and 4, results from the Adjusted Pearson Goodness-of-Fit Test, indicates that the distribution chosen is not a good fit for the distribution of residuals.  
+For models 1 and 4, results from `Information Criteria' ranks Model 4 to be a comparatively better model with lowest values.    
 
-Model 3 seems to be a better more model than model 2, as it has a lower Information Criteria values  
-
-## Model 3 is the best model
+## Model 4 is the best model
 Run simulation and store results of simulation in `sim`  
-gjrGARCH model
+AR(1) gjrGARCH model
 ```bash
-s_final=ugarchspec(mean.model = list(armaOrder=c(0,0)),
-                   variance.model = list(model='gjrGARCH'),
-                   distribution.model = 'sstd')
+s_final=ugarchspec(mean.model = list(armaOrder=c(1,0)),
+             variance.model = list(model='gjrGARCH'),
+             distribution.model = 'sstd')
 
 m=ugarchfit(data = return,spec = s_final)
 
