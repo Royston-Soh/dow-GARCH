@@ -171,12 +171,13 @@ s=ugarchspec(mean.model = list(armaOrder=c(0,0)),
 ![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/11%20News%20impact%20curve.jpg)
 
 ### Model 4: AR(1) gjrGARCH
-Referring to the `Optimal Parameters`, we observe that the P-value for `ar1` is lesser than 0.05, and conclude that the inclusion of this parameter is stastically significant.
+Referring to the `Optimal Parameters`, we observe that the P-value for `ar1` is lesser than 0.05, and conclude that that the inclusion of this coefficient is statistically significant.
 ```bash
 s=ugarchspec(mean.model = list(armaOrder=c(1,0)),
              variance.model = list(model='gjrGARCH'),
              distribution.model = 'sstd')
 ```
+![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/12%20Model%204%20AR_1%20gjrGARCH.jpg)
 
 ### Model 5: gjrGARCH in mean
 ```bash
@@ -188,8 +189,10 @@ s=ugarchspec(mean.model = list(armaOrder=c(0,0),
 ```
 
 We observe under `Optimal Parameters` that coefficient `archm` is not statistically significant, hence, the addition of this variable does not improve the model.   Disregard model 5  
+![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/12%20Model%205%20achm.jpg)
 
 For models 1 and 4, results from `Information Criteria' ranks Model 4 to be a comparatively better model with lowest values.    
+![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/13%20Choose%20model.jpg)
 
 ## Model 4 is the best model
 Run simulation and store results of simulation in `sim`  
@@ -208,7 +211,7 @@ sim=ugarchpath(spec = s_final,
                rseed = 123)
 ```
 
-## Calculate forecasted DOW index and extract actual index for test data
+## Calculate forecasted Dow index and extract actual index for test data
 ```bash
 #Firstly extract the final data point for training set and store as 'x'
 tail(training_xts)
@@ -225,7 +228,7 @@ actuals_df=data.frame(test_xts)
 actuals=actuals_df$DJI
 ```
 
-## Visualization of actual vs predicted Dow Jones Industrial Index
+## Visualization of actual vs predicted Dow index
 ```bash
 to_plot=data.frame(predicted,actuals)
 matplot(to_plot,
@@ -237,7 +240,7 @@ matplot(to_plot,
 legend("bottomright", inset=0.01, legend=colnames(to_plot), col=c(1:2),pch=15:19,
        bg= ("white"), horiz=F)
 ```
-![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/12%20actuals%20vs%20predicted%20plot.jpg)
+![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/14%20plot.jpg)
 
 ## Model accuracy
 Based on the lower error measures below as compared to [Facebook Prophet Model](https://github.com/Royston-Soh/dow-facebook-prophet), we conclude that GARCH model which takes into consideration the volatility of error variance is more accurate in predicting the Dow Jones Industrial Index.
@@ -245,7 +248,7 @@ Based on the lower error measures below as compared to [Facebook Prophet Model](
 round(accuracy(predicted,actuals),2)
 ```
 Accuracy for GARCH model  
-![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/13%20accuracy.jpg)  
+![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/15%20Accuracy.jpg)  
 
 Accuracy for Facebook Prophet model  
 ![](https://github.com/Royston-Soh/dow-facebook-prophet/blob/main/pic/12%20Accuracy_test_actual%20scale.jpg)
