@@ -1,13 +1,13 @@
 # Time series forecasting for Dow Jones Industrial Average (using GARCH)
 In this post, we will try to model and predict the Dow Jones Industrial Average using Generalized Autoregressive Conditional Heteroskedasticity (GARCH) models, which is an extension of the ARCH(q) model.
 
-In examining the usefulness of this model in predicting the Dow Jones Industrial Index, we will also compare it to the [Facebook Prophet Model](https://github.com/Royston-Soh/dow-facebook-prophet) to ascertain which is a better model for forecasting in this context.
-
 In the ARCH(q) model, the time-dependant volatility depends on q lag squared values of the error terms.  
 
 The standard GARCH model assumes none constant variance of the error terms over time, hence we extend the ARCH(q) model by including the p number of lags for error variance, that is also assumed to follow an ARMA process.  
 
-For a more information on the GARCH model and its equations, please refer to [Idriss Tsafack's page](https://www.idrisstsafack.com/post/garch-models-with-r-programming-a-practical-example-with-tesla-stock).
+In examining the usefulness of this model in predicting the Dow Jones Industrial Index, we will also compare it to the [Facebook Prophet Model](https://github.com/Royston-Soh/dow-facebook-prophet) to ascertain which is a better model for forecasting in this context.
+
+For more information on the GARCH model and its equations, please refer to [Idriss Tsafack's page](https://www.idrisstsafack.com/post/garch-models-with-r-programming-a-practical-example-with-tesla-stock).
 
 ```bash
 library(xts)
@@ -108,7 +108,7 @@ Create specification for model using `ugarchspec` and store as `s`, by specifyin
 - variance model 
 - distribution of error terms
 
-### Model 1: We begin with the simplest standard GARCH model with constant mean
+### Model 1: We begin with the standard GARCH model with constant mean
 ```bash
 s=ugarchspec(mean.model = list(armaOrder=c(0,0)),
              variance.model = list(model='sGARCH'),
@@ -124,12 +124,12 @@ P-values for all 4 coefficients are less than 0.05, and hence statistically sign
 
 Weighted Ljung-Box Test:  
 Checks for autocorrelation of residuals  
-Ho: Residuals are not autocorrelated  
+Test Ho: Residuals are not autocorrelated  
 P-value <0.05 denotes autocorrelation for the respective lags  
 
 Adjusted Pearson Goodness-of-Fit Test:  
 Helps verify whether the distribution of the error terms fits the distribution that we have chosen  
-Ho: The distribution of the error terms follow the distribution chosen by us  
+Test Ho: The distribution of the error terms follow the distribution chosen by us  
 In our case, with P-values <0.05, we reject the null hypothesis and conclude that the normal distribution chosen by us is not a good fit for the distribution of residuals.  
 
 Information Criteria:  
@@ -142,19 +142,19 @@ plot(m,which='all')
 
 Plot no. 8 and 9 also measures whether the distribution of the error terms fit the distribution that we have chosen.  
 
-Referring to plot no.8 'Empirical Density of Standardized Residuals', we observe that the histogram of standardized residuals is taller than normal distribution. For plot no.9, we observe that the tails deviate from the straight line at extreme values. This further corroborates the above findings from the Adjusted Pearson Goodness-of-Fit Test that the normal distribution that we have chosen is not a good fit for modeling the distribution of error terms.
+Referring to plot no.8 'Empirical Density of Standardized Residuals', we observe that the histogram of standardized residuals is taller than normal distribution. For plot no.9, we observe that the tails of the curve deviate from the straight line at extreme values. This further corroborates the above findings from the Adjusted Pearson Goodness-of-Fit Test that the normal distribution that we have chosen is not a good fit for modeling the distribution of error terms. There is scope for further improving the model.
 
 ### ACF plots for evaluating autocorrelation
 ACF Plots for observations: plots 4, 5, 6, 7  
-We observe that the columns cross the red line, which suggests the presence of significant autocorrelation for the observations  
+We observe that the columns cross the red line, which suggests the presence of significant autocorrelation for the observations.  
 
 ACF plots for residuals: plots 10 and 11  
-There's much improvement as compared to ACP plots for Observations, most columns are within red line 
+There's much improvement as compared to ACP plots for Observations, most columns are within the red line. 
 ![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/10%20plot%2012%20charts.jpg)
 
 ## Continue to build and evaluate variations of GARCH models
 ### Model 2: GARCH with skewed Student t-distribution (sstd)
-Adopt Student t-distribution for distribution of error terms, which is taller with fatter tails. Plot no.9 shows an improved QQ-plot with extreme values that are more aligned to the straight line. We have selected a distribution that better fits the distribution of the error terms. 
+Adopt Student t-distribution for distribution of error terms, which is taller with fatter tails. Plot no.9 shows an improved QQ-plot with extreme values that are more aligned to the straight line. We have improved the model by selecting a distribution that better fits the distribution of the error terms. 
 ```bash
 s=ugarchspec(mean.model = list(armaOrder=c(0,0)),
              variance.model = list(model='sGARCH'),
@@ -163,7 +163,7 @@ s=ugarchspec(mean.model = list(armaOrder=c(0,0)),
 ![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/16%20sstd%20QQ%20plot.jpg)
 
 ### Model 3: gjrGARCH model
-Developed by Glosten-Jagannathan-Runkle, takes into account the asymmetry of returns that is affected by good or bad news. In financial markets, bad news typically results in more pronounced impact on volatility, as compared to good news. This is graphically depicted in plot 12
+Developed by Glosten-Jagannathan-Runkle, takes into account the asymmetry of returns that is affected by good or bad news. In financial markets, bad news typically results in more pronounced impact on volatility, as compared to good news. The results of selecting this as the variance model is graphically depicted in plot 12.
 ```bash
 s=ugarchspec(mean.model = list(armaOrder=c(0,0)),
              variance.model = list(model='gjrGARCH'),
@@ -172,7 +172,7 @@ s=ugarchspec(mean.model = list(armaOrder=c(0,0)),
 ![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/11%20News%20impact%20curve.jpg)
 
 ### Model 4: AR(1) gjrGARCH
-Under `Optimal Parameters`, we observe that the P-value for `ar1` is less than 0.05, and conclude that the inclusion of this coefficient is statistically significant.
+Under `Optimal Parameters`, we observe that the P-value for `ar1` coefficient is less than 0.05, and conclude that it is statistically significant and results in improving the model.
 ```bash
 s=ugarchspec(mean.model = list(armaOrder=c(1,0)),
              variance.model = list(model='gjrGARCH'),
@@ -190,9 +190,11 @@ s=ugarchspec(mean.model = list(armaOrder=c(0,0),
 ```
 
 We observe under `Optimal Parameters` that coefficient `archm` is not statistically significant, hence, the addition of this variable does not improve the model.   Disregard model 5  
+
 ![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/12%20Model%205%20achm.jpg)
 
-For models 1 and 4, results from `Information Criteria` ranks Model 4 to be a comparatively better model with lowest values.    
+For the remaining models, model 4 with the lowest `Information Criteria` measures, ranks the best fit.  
+
 ![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/13%20Choose%20model.jpg)
 
 ## Model 4 is the best model
@@ -244,7 +246,7 @@ legend("bottomright", inset=0.01, legend=colnames(to_plot), col=c(1:2),pch=15:19
 ![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/14%20plot.jpg)
 
 ## Model accuracy
-Based on the lower error measures below as compared to [Facebook Prophet Model](https://github.com/Royston-Soh/dow-facebook-prophet), we conclude that GARCH model which takes into consideration the volatility of error variance is more accurate in predicting the Dow Jones Industrial Index.
+When comparing the error measures below, we conclude that GARCH model which takes into consideration the volatility of error variance is more accurate in predicting the Dow Jones Industrial Index. It has a lower error measure as compared to the [Facebook Prophet Model](https://github.com/Royston-Soh/dow-facebook-prophet).
 ```bash
 round(accuracy(predicted,actuals),2)
 ```
