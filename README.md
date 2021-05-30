@@ -3,7 +3,7 @@ In this post, we will try to model and predict the Dow Jones Industrial Average 
 
 In the ARCH(q) model, the time-dependant volatility depends on q lag squared values of the error terms.  
 
-The standard GARCH model assumes none constant variance of the error terms over time (heteroskedasticity), hence we extend the ARCH(q) model by including the p number of lags for error variance, that is also assumed to follow an ARMA process.
+The standard GARCH model assumes none constant variance of the error terms over time, hence we extend the ARCH(q) model by including the p number of lags for error variance, that is also assumed to follow an ARMA process.
 
 ```bash
 library(xts)
