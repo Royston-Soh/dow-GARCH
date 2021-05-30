@@ -114,7 +114,7 @@ m
 ```
 
 ## Interpretation of model output
-Optimal Parameters:
+Optimal Parameters:  
 Check if coefficients of the model are statistically significant (ie. P-values <0.05)
 P-values for all 4 coefficients are less than 0.05, and hence statistically significant
 
