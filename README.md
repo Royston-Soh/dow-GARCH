@@ -131,18 +131,22 @@ In our case, with P-values <0.05, we reject the null hypothesis and conclude tha
 Information Criteria:  
 Statistical measures of fit, generally smaller values means a better model, this can be used to rank various models
 
+![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/9%20model%20output.jpg)
+
 ### Plot and interprete the 12 charts
 plot(m,which='all')
 
 Plot no. 8 and 9 also measures whether the distribution of the error terms fit the distribution that we have chosen.  
+
 Referring to plot no.8 'Empirical Density of Standardized Residuals', we observe that the histogram of standardized residuals is taller than normal distribution. For plot no.9, we observe that the tails deviate from the straight line at extreme values. This further corroborates the above findings from the Adjusted Pearson Goodness-of-Fit Test that the normal distribution that we have chosen is not a good fit for modeling the distribution of error terms.
 
 ### ACF plots for evaluating autocorrelation
-Referring to ACF plots for observations: plots 4, 5, 6, 7  
+ACF Plots for observations: plots 4, 5, 6, 7  
 We observe that the columns cross the red line, which suggests the presence of significant autocorrelation for the observations  
 
-Next we refer to ACF plots for residuals: plots 10 and 11  
+ACF plots for residuals: plots 10 and 11  
 There's much improvement as compared to ACP plots for Observations, most columns are within red line 
+![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/10%20plot%2012%20charts.jpg)
 
 ## Continue to build and evaluate variations of GARCH models
 ### Model 2: GARCH with skewed student t-distribution (sstd)
@@ -160,6 +164,7 @@ s=ugarchspec(mean.model = list(armaOrder=c(0,0)),
              variance.model = list(model='gjrGARCH'),
              distribution.model = 'sstd')
 ```
+![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/11%20News%20impact%20curve.jpg)
 
 ### Model 4: AR(1) gjrGARCH
 Adjusted Pearson Goodness-of-Fit Test: P-values are all lesser than 0.05, hence reject the null hypothesis that the model is a good fit
@@ -185,6 +190,7 @@ For models 1 and 4, results from the Adjusted Pearson Goodness-of-Fit Test, indi
 Model 3 seems to be a better more model than model 2, as it has a lower Information Criteria values  
 
 ## Model 3 is the best model
+Run simulation and store results of simulation in `sim`  
 gjrGARCH model
 ```bash
 s_final=ugarchspec(mean.model = list(armaOrder=c(0,0)),
@@ -192,31 +198,27 @@ s_final=ugarchspec(mean.model = list(armaOrder=c(0,0)),
                    distribution.model = 'sstd')
 
 m=ugarchfit(data = return,spec = s_final)
-setfixed(s_final)=as.list(coef(m))
-```
 
-## Run simulation and store results of simulation in sim
-```bash
+setfixed(s_final)=as.list(coef(m))
 sim=ugarchpath(spec = s_final,
                m.sim = 1,
                n.sim = 1*252,
                rseed = 123)
 ```
 
-## Calculate forecasted DOW index
+## Calculate forecasted DOW index and extract actual index for test data
 ```bash
-#Firstly extract the final data point for training set
+#Firstly extract the final data point for training set and store as 'x'
 tail(training_xts)
 x=as.numeric(last(training_xts$DJI))
 x
 
+#Calculate forecasted DOW index and store in dataframe
 p=x*apply(fitted(sim), 2, 'cumsum')+x
-
 df_p=data.frame(p)
 predicted=df_p$p
-```
-## Extract actual index values for test data
-```bash
+
+#Extract actual index values for test data
 actuals_df=data.frame(test_xts)
 actuals=actuals_df$DJI
 ```
@@ -233,8 +235,15 @@ matplot(to_plot,
 legend("bottomright", inset=0.01, legend=colnames(to_plot), col=c(1:2),pch=15:19,
        bg= ("white"), horiz=F)
 ```
+![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/12%20actuals%20vs%20predicted%20plot.jpg)
 
 ## Model accuracy
+Based on the lower accuracy measures below, as compared to [Facebook Prophet Model](https://github.com/Royston-Soh/dow-facebook-prophet),we conclude that GARCH model which takes into consideration the volatility of error variance is more accurate in predicting the Dow Jones Industrial Index.
 ```bash
 round(accuracy(predicted,actuals),2)
 ```
+Accuracy for GARCH model
+![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/13%20accuracy.jpg)  
+
+Accuracy for Facebook Prophet model
+
