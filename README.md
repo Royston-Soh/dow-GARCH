@@ -1,9 +1,13 @@
 # Time series forecasting for Dow Jones Industrial Average (using GARCH)
 In this post, we will try to model and predict the Dow Jones Industrial Average using Generalized Autoregressive Conditional Heteroskedasticity (GARCH) models, which is an extension of the ARCH(q) model.
 
+In examining the usefulness of this model in predicting the Dow Jones Industrial Index, we will also compare it to the [Facebook Prophet Model](https://github.com/Royston-Soh/dow-facebook-prophet) to ascertain which is a better model for forecasting.
+
 In the ARCH(q) model, the time-dependant volatility depends on q lag squared values of the error terms.  
 
-The standard GARCH model assumes none constant variance of the error terms over time, hence we extend the ARCH(q) model by including the p number of lags for error variance, that is also assumed to follow an ARMA process.
+The standard GARCH model assumes none constant variance of the error terms over time, hence we extend the ARCH(q) model by including the p number of lags for error variance, that is also assumed to follow an ARMA process.  
+
+For a more information on the GARCH model and its equations, please refer to [Idriss Tsafack's page](https://www.idrisstsafack.com/post/garch-models-with-r-programming-a-practical-example-with-tesla-stock).
 
 ```bash
 library(xts)
@@ -238,12 +242,13 @@ legend("bottomright", inset=0.01, legend=colnames(to_plot), col=c(1:2),pch=15:19
 ![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/12%20actuals%20vs%20predicted%20plot.jpg)
 
 ## Model accuracy
-Based on the lower accuracy measures below, as compared to [Facebook Prophet Model](https://github.com/Royston-Soh/dow-facebook-prophet),we conclude that GARCH model which takes into consideration the volatility of error variance is more accurate in predicting the Dow Jones Industrial Index.
+Based on the lower error measures below as compared to [Facebook Prophet Model](https://github.com/Royston-Soh/dow-facebook-prophet), we conclude that GARCH model which takes into consideration the volatility of error variance is more accurate in predicting the Dow Jones Industrial Index.
 ```bash
 round(accuracy(predicted,actuals),2)
 ```
-Accuracy for GARCH model
+Accuracy for GARCH model  
 ![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/13%20accuracy.jpg)  
 
-Accuracy for Facebook Prophet model
+Accuracy for Facebook Prophet model  
+![](https://github.com/Royston-Soh/dow-facebook-prophet/blob/main/pic/12%20Accuracy_test_actual%20scale.jpg)
 
