@@ -154,7 +154,7 @@ There's much improvement as compared to ACP plots for Observations, most columns
 
 ## Continue to build and evaluate variations of GARCH models
 ### Model 2: GARCH with skewed Student t-distribution (sstd)
-Adopt student t-distribution for distribution of error terms, which is taller with fatter tails. Plot no.9 shows an improved QQ-plot with extreme values that are more aligned to the straight line. We have selected a distribution that better fits the distribution of the error terms. 
+Adopt Student t-distribution for distribution of error terms, which is taller with fatter tails. Plot no.9 shows an improved QQ-plot with extreme values that are more aligned to the straight line. We have selected a distribution that better fits the distribution of the error terms. 
 ```bash
 s=ugarchspec(mean.model = list(armaOrder=c(0,0)),
              variance.model = list(model='sGARCH'),
