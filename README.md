@@ -191,7 +191,7 @@ s=ugarchspec(mean.model = list(armaOrder=c(0,0),
 We observe under `Optimal Parameters` that coefficient `archm` is not statistically significant, hence, the addition of this variable does not improve the model.   Disregard model 5  
 ![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/12%20Model%205%20achm.jpg)
 
-For models 1 and 4, results from `Information Criteria' ranks Model 4 to be a comparatively better model with lowest values.    
+For models 1 and 4, results from `Information Criteria` ranks Model 4 to be a comparatively better model with lowest values.    
 ![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/13%20Choose%20model.jpg)
 
 ## Model 4 is the best model
