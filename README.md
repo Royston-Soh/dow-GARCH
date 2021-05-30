@@ -104,7 +104,7 @@ Create specification for model using `ugarchspec` and store as `s`, by specifyin
 - variance model 
 - distribution of error terms
 
-## Model 1: We begin with the simplest standard GARCH model with constant mean
+### Model 1: We begin with the simplest standard GARCH model with constant mean
 ```bash
 s=ugarchspec(mean.model = list(armaOrder=c(0,0)),
              variance.model = list(model='sGARCH'),
@@ -113,37 +113,35 @@ m=ugarchfit(data = return,spec = s)
 m
 ```
 
-## Interpretation of model output
+### Interpretation of model output
 Optimal Parameters:  
-Check if coefficients of the model are statistically significant (ie. P-values <0.05)
+Check if coefficients of the model are statistically significant (ie. P-values <0.05)  
 P-values for all 4 coefficients are less than 0.05, and hence statistically significant
 
-Weighted Ljung-Box Test:
-Checks for autocorrelation of residuals
-Ho: Residuals are not autocorrelated
-P-value <0.05 denotes autocorrelation for the respective lags
+Weighted Ljung-Box Test:  
+Checks for autocorrelation of residuals  
+Ho: Residuals are not autocorrelated  
+P-value <0.05 denotes autocorrelation for the respective lags  
 
-Adjusted Pearson Goodness-of-Fit Test:
-Helps verify whether the distribution of the error terms fits the distribution that we have chosen
+Adjusted Pearson Goodness-of-Fit Test:  
+Helps verify whether the distribution of the error terms fits the distribution that we have chosen  
+Ho: The distribution of the error terms follow the distribution chosen by us  
+In our case, with P-values <0.05, we reject the null hypothesis and conclude that the normal distribution chosen by us is not a good fit for the distribution of residuals.  
 
-Ho: The distribution of the error terms follow the distribution chosen by us
-
-In our case, with P-values <0.05, we reject the null hypothesis and conclude that the normal distribution chosen by us is not a good fit for the distribution of residuals.
-
-Information Criteria:
+Information Criteria:  
 Statistical measures of fit, generally smaller values means a better model, this can be used to rank various models
 
-## Plot and interprete the 12 charts
+### Plot and interprete the 12 charts
 plot(m,which='all')
 
-Plot no. 8 and 9 also measures whether the distribution of the error terms fit the distribution that we have chosen.
+Plot no. 8 and 9 also measures whether the distribution of the error terms fit the distribution that we have chosen.  
 Referring to plot no.8 'Empirical Density of Standardized Residuals', we observe that the histogram of standardized residuals is taller than normal distribution. For plot no.9, we observe that the tails deviate from the straight line at extreme values. This further corroborates the above findings from the Adjusted Pearson Goodness-of-Fit Test that the normal distribution that we have chosen is not a good fit for modeling the distribution of error terms.
 
 ### ACF plots for evaluating autocorrelation
-Referring to ACF plots for observations: plots 4, 5, 6, 7
-We observe that the columns cross the red line, which suggests the presence of significant autocorrelation for the observations
+Referring to ACF plots for observations: plots 4, 5, 6, 7  
+We observe that the columns cross the red line, which suggests the presence of significant autocorrelation for the observations  
 
-Next we refer to ACF plots for residuals: plots 10 and 11
+Next we refer to ACF plots for residuals: plots 10 and 11  
 There's much improvement as compared to ACP plots for Observations, most columns are within red line 
 
 ## Continue to build and evaluate variations of GARCH models
@@ -180,11 +178,11 @@ s=ugarchspec(mean.model = list(armaOrder=c(0,0),
              distribution.model = 'sstd')
 ```
 
-We observe under 'Optimal Parameters' that coefficient archm is not statistically significant, hence, the addition of this variable does not improve the model. Disregard model 5
+We observe under 'Optimal Parameters' that coefficient archm is not statistically significant, hence, the addition of this variable does not improve the model.   Disregard model 5  
 
-For models 1 and 4, results from the Adjusted Pearson Goodness-of-Fit Test, indicates that the distribution chosen is not a good fit for the distribution of residuals.
+For models 1 and 4, results from the Adjusted Pearson Goodness-of-Fit Test, indicates that the distribution chosen is not a good fit for the distribution of residuals.  
 
-Model 3 seems to be a better more model than model 2, as it has a lower Information Criteria values
+Model 3 seems to be a better more model than model 2, as it has a lower Information Criteria values  
 
 ## Model 3 is the best model
 gjrGARCH model
