@@ -21,7 +21,7 @@ dow_data=read.csv('dow_data_v3.csv',header = T,sep = ',')
 head(dow_data)
 tail(dow_data)
 ```
-![]()
+![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/1%20head_tail.jpg)
 
 ## Standardize the date format and convert the data to time series xts file type
 Let's use the data from year 2008 onward
@@ -35,7 +35,7 @@ colnames(df)=c('DJI')
 df_xts=as.xts(df)
 df_xts=df_xts['2008/']
 ```
-![]()
+![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/2%20time%20series.jpg)
 
 ## Plot the chart series
 We observe an upward multiplicative (exponential) trend, with high volatility. The index enters several peaks before pulling back strongly.
@@ -43,6 +43,7 @@ We observe an upward multiplicative (exponential) trend, with high volatility. T
 chartSeries(df_xts,
             theme=chartTheme('white'))
 ```
+![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/3%20dow%20plot.jpg)
 
 ## Split the data to training and test set
 Let's predict and validate for 252 trading days
@@ -59,12 +60,14 @@ return=CalculateReturns(training_xts)
 return=na.omit(return)
 View(return)
 ```
+![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/4%20returns.jpg)
 
 ## Visualize the daily returns data
 We observe that the daily returns are close to zero for most days, there are some days with really high returns (5% to 10% etc), similarly for some days with excessive negative returns. 
 ```bash
 hist(return)
 ```
+![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/5%20returns%20plot.jpg)
 
 ## Add density curve and normal distribution curve
 As compared against the normal distribution, curve for return is taller, also implies that there are more extreme values (thicker tails). Distribution for returns looks more like Student t-distribution, rather than the normal distribution.
@@ -73,12 +76,14 @@ chart.Histogram(return,
                 methods = c('add.density','add.normal'),
                 colorset = c('blue','green','red'))
 ```
+![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/6%20returns%20bell%20curve.jpg)
 
 ## Plot series
-We observe a time series for returns with no sign of seasonality or trend components. There is volatility clustering on certain months around the mean return of zero
+We observe a time series for returns with no sign of seasonality or trend components. There is volatility clustering on certain months
 ```bash
 chartSeries(return,theme='white')
 ```
+![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/7%20chart%20series%20for%20returns.jpg)
 
 ## Plot for annualized volatility
 Once again, we notice very high volatility on certain months as compared to the  rest of the months
@@ -89,12 +94,15 @@ chart.RollingPerformance(R=return['2008::2020'],
                          scale=252,
                          main = 'DJI monthly volatility')
 ```
+![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/8%20annual%20volatility.jpg)
+
 ## Build and fit the GARCH model
 Build a few variations of GARCH model and find the most accurate one by ranking them. 
-Create specification for model using ‘ugarchspec’ and store as s, by specifying the:
--mean model
--variance model 
--distribution of error terms
+Create specification for model using `ugarchspec` and store as `s`, by specifying the:
+
+- mean model
+- variance model 
+- distribution of error terms
 
 ## Model 1: We begin with the simplest standard GARCH model with constant mean
 ```bash
