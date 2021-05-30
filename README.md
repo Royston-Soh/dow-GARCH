@@ -1,7 +1,7 @@
 # Time series forecasting for Dow Jones Industrial Average (using GARCH)
 In this post, we will try to model and predict the Dow Jones Industrial Average using Generalized Autoregressive Conditional Heteroskedasticity (GARCH) models, which is an extension of the ARCH(q) model.
 
-In examining the usefulness of this model in predicting the Dow Jones Industrial Index, we will also compare it to the [Facebook Prophet Model](https://github.com/Royston-Soh/dow-facebook-prophet) to ascertain which is a better model for forecasting.
+In examining the usefulness of this model in predicting the Dow Jones Industrial Index, we will also compare it to the [Facebook Prophet Model](https://github.com/Royston-Soh/dow-facebook-prophet) to ascertain which is a better model for forecasting in this context.
 
 In the ARCH(q) model, the time-dependant volatility depends on q lag squared values of the error terms.  
 
