@@ -153,16 +153,17 @@ There's much improvement as compared to ACP plots for Observations, most columns
 ![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/10%20plot%2012%20charts.jpg)
 
 ## Continue to build and evaluate variations of GARCH models
-### Model 2: GARCH with skewed student t-distribution (sstd)
-Adopt student t-distribution for distribution of error terms, which is taller with fatter tails
+### Model 2: GARCH with skewed Student t-distribution (sstd)
+Adopt student t-distribution for distribution of error terms, which is taller with fatter tails. Plot no.9 shows an improved QQ-plot with extreme values that are more aligned to the straight line. We have selected a distribution that better fits the distribution of the error terms. 
 ```bash
 s=ugarchspec(mean.model = list(armaOrder=c(0,0)),
              variance.model = list(model='sGARCH'),
              distribution.model = 'sstd')
 ```
+![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/16%20sstd%20QQ%20plot.jpg)
 
 ### Model 3: gjrGARCH model
-Developed by Glosten-Jagannathan-Runkle takes into account the asymmetry of returns that is affected by good or bad news. In the financial markets, bad news typically results in more pronounced impact on volatility, as compared to good news. This is graphically depicted in plot 12
+Developed by Glosten-Jagannathan-Runkle, takes into account the asymmetry of returns that is affected by good or bad news. In financial markets, bad news typically results in more pronounced impact on volatility, as compared to good news. This is graphically depicted in plot 12
 ```bash
 s=ugarchspec(mean.model = list(armaOrder=c(0,0)),
              variance.model = list(model='gjrGARCH'),
@@ -171,7 +172,7 @@ s=ugarchspec(mean.model = list(armaOrder=c(0,0)),
 ![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/11%20News%20impact%20curve.jpg)
 
 ### Model 4: AR(1) gjrGARCH
-Referring to the `Optimal Parameters`, we observe that the P-value for `ar1` is lesser than 0.05, and conclude that that the inclusion of this coefficient is statistically significant.
+Under `Optimal Parameters`, we observe that the P-value for `ar1` is less than 0.05, and conclude that the inclusion of this coefficient is statistically significant.
 ```bash
 s=ugarchspec(mean.model = list(armaOrder=c(1,0)),
              variance.model = list(model='gjrGARCH'),
