@@ -181,6 +181,7 @@ s=ugarchspec(mean.model = list(armaOrder=c(1,0)),
 ![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/12%20Model%204%20AR_1%20gjrGARCH.jpg)
 
 ### Model 5: gjrGARCH in mean
+Adds a heteroskedasticity term into the mean equation, to account for volatility of the mean over time.
 ```bash
 s=ugarchspec(mean.model = list(armaOrder=c(0,0),
              archm=T,
