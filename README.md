@@ -104,7 +104,7 @@ chart.RollingPerformance(R=return['2008::2020'],
 Build a few variations of GARCH model and find the most accurate one by ranking them. 
 Create specification for model using `ugarchspec` and store as `s`, by specifying the:
 
-**- mean model** to test for serial dependence of the returns (ie. Whether the returns evolve nonrandomly, such as reverting to its mean or an equilibrium value). May also include p, q values for removing the mentioned serial dependence.
+- **mean model** to test for serial dependence of the returns (ie. Whether the returns evolve nonrandomly, such as reverting to its mean or an equilibrium value). May also include p, q values for removing the mentioned serial dependence.
 - variance model to model the ARCH effects of the residuals of the mean equation, where effects of large changes in variance of returns results in further large shocks to variance of returns. 
 - distribution of error terms to fit the distribution of the residuals.
 
