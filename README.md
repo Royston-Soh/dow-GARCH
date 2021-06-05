@@ -105,7 +105,7 @@ Build a few variations of GARCH model and find the most accurate one by ranking 
 Create specification for model using `ugarchspec` and store as `s`, by specifying the:
 
 - **mean model** to test for serial dependence of the returns (ie. Whether the returns evolve nonrandomly, such as reverting to its mean or an equilibrium value). We may also specify p, q values for removing the mentioned serial dependence.
-- **variance model** to model the ARCH effects of the residuals of the mean equation, where effects of large changes in variance of returns results in further large shocks to variance of returns. 
+- **variance model** to model the ARCH effects of the residuals of the mean equation, where effects of changes in variance of returns results in further effects to future variance of returns. 
 - **distribution of error terms** to fit the distribution of the residuals.
 
 ### Model 1: We begin with the standard GARCH model with constant mean
