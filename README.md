@@ -243,7 +243,7 @@ matplot(to_plot,
 legend("bottomright", inset=0.01, legend=colnames(to_plot), col=c(1:2),pch=15:19,
        bg= ("white"), horiz=F)
 ```
-![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/14%20plot.jpg)
+![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/14%20plot_2.jpg)
 
 ## Model accuracy
 When comparing the error measures below, we conclude that GARCH model which takes into consideration the volatility of error variance is more accurate in predicting the Dow Jones Industrial Index. It has a lower error measure as compared to the [Facebook Prophet Model](https://github.com/Royston-Soh/dow-facebook-prophet).
