@@ -181,7 +181,7 @@ s=ugarchspec(mean.model = list(armaOrder=c(1,0)),
 ![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/12%20Model%204%20AR_1%20gjrGARCH.jpg)
 
 ### Model 5: eGARCH
-EXponential GARCH is another model that accounts for the asymmetric effects on variance from positive vs negative shocks 
+EXponential GARCH is another model that accounts for the asymmetric effects on variance from positive vs negative shocks. 
 ```bash
 s=ugarchspec(variance.model=list(model="eGARCH", garchOrder=c(1,1)),
              mean.model=list(armaOrder=c(0,0)),
