@@ -162,7 +162,7 @@ s=ugarchspec(mean.model = list(armaOrder=c(0,0)),
 ```
 ![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/16%20sstd%20QQ%20plot.jpg)
 
-### Model 3: gjrGARCH model
+### Model 3: gjrGARCH
 Developed by Glosten-Jagannathan-Runkle, takes into account the asymmetric effects on variance from positive vs negative shocks. In financial markets, bad news typically results in more pronounced impact on volatility, as compared to good news. The results of selecting this as the variance model is graphically depicted in plot 12.
 ```bash
 s=ugarchspec(mean.model = list(armaOrder=c(0,0)),
@@ -181,7 +181,7 @@ s=ugarchspec(mean.model = list(armaOrder=c(1,0)),
 ![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/12%20Model%204%20AR_1%20gjrGARCH.jpg)
 
 ### Model 5: eGARCH
-EXponential GARCH is another model that accounts for the asymmetric effects on variance from positive vs negative shocks. 
+Exponential GARCH is another model that accounts for the asymmetric effects on variance from positive vs negative shocks. 
 ```bash
 s=ugarchspec(variance.model=list(model="eGARCH", garchOrder=c(1,1)),
              mean.model=list(armaOrder=c(0,0)),
