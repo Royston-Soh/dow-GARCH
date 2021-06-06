@@ -163,7 +163,7 @@ s=ugarchspec(mean.model = list(armaOrder=c(0,0)),
 ![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/16%20sstd%20QQ%20plot.jpg)
 
 ### Model 3: gjrGARCH model
-Developed by Glosten-Jagannathan-Runkle, takes into account the asymmetry of returns that is affected by good or bad news. In financial markets, bad news typically results in more pronounced impact on volatility, as compared to good news. The results of selecting this as the variance model is graphically depicted in plot 12.
+Developed by Glosten-Jagannathan-Runkle, takes into account the asymmetric effects on variance from positive vs negative shocks. In financial markets, bad news typically results in more pronounced impact on volatility, as compared to good news. The results of selecting this as the variance model is graphically depicted in plot 12.
 ```bash
 s=ugarchspec(mean.model = list(armaOrder=c(0,0)),
              variance.model = list(model='gjrGARCH'),
@@ -180,7 +180,15 @@ s=ugarchspec(mean.model = list(armaOrder=c(1,0)),
 ```
 ![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/12%20Model%204%20AR_1%20gjrGARCH.jpg)
 
-### Model 5: gjrGARCH in mean
+### Model 5: eGARCH
+EXponential GARCH is another model that accounts for the asymmetric effects on variance from positive vs negative shocks 
+```bash
+s=ugarchspec(variance.model=list(model="eGARCH", garchOrder=c(1,1)),
+             mean.model=list(armaOrder=c(0,0)),
+             distribution.model = 'sstd')
+```
+
+### Model 6: gjrGARCH in mean
 Adds a heteroskedasticity term into the mean equation, to account for volatility of the mean over time.
 ```bash
 s=ugarchspec(mean.model = list(armaOrder=c(0,0),
@@ -190,7 +198,7 @@ s=ugarchspec(mean.model = list(armaOrder=c(0,0),
              distribution.model = 'sstd')
 ```
 
-We observe under `Optimal Parameters` that coefficient `archm` is not statistically significant, hence, the addition of this variable does not improve the model.   Disregard model 5  
+We observe under `Optimal Parameters` that coefficient `archm` is not statistically significant, hence, the addition of this variable does not improve the model.   Disregard model 6  
 
 ![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/12%20Model%205%20achm.jpg)
 
