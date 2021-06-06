@@ -204,7 +204,7 @@ We observe under `Optimal Parameters` that coefficient `archm` is not statistica
 
 For the remaining models, model 4 with the lowest `Information Criteria` measures, ranks the best fit.  
 
-![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/13%20Choose%20model.jpg)
+![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/13%20Choose%20model_2.jpg)
 
 ## Model 4 is the best model
 Run simulation and store results of simulation in `sim`  
