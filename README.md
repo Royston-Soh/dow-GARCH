@@ -39,7 +39,7 @@ colnames(df)=c('DJI')
 df_xts=as.xts(df)
 df_xts=df_xts['2008/']
 ```
-![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/2%20time%20series.jpg)
+![GARCH](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/2%20time%20series.jpg)
 
 ## Plot the chart series
 We observe an upward multiplicative (exponential) trend, with high volatility. The index enters several peaks before pulling back strongly.
@@ -64,14 +64,14 @@ return=CalculateReturns(training_xts)
 return=na.omit(return)
 View(return)
 ```
-![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/4%20returns.jpg)
+![GARCH](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/4%20returns.jpg)
 
 ## Visualize the daily returns data
 We observe that the daily returns are close to zero for most days, there are some days with really high returns (5% to 10% etc), similarly for some days with excessive negative returns. 
 ```bash
 hist(return)
 ```
-![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/5%20returns%20plot.jpg)
+![GARCH](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/5%20returns%20plot.jpg)
 
 ## Add density curve and normal distribution curve
 As compared against the normal distribution, curve for return is taller, also implies that there are more extreme values (thicker tails). Distribution for returns looks more like Student t-distribution, rather than the normal distribution.
@@ -80,14 +80,14 @@ chart.Histogram(return,
                 methods = c('add.density','add.normal'),
                 colorset = c('blue','green','red'))
 ```
-![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/6%20returns%20bell%20curve.jpg)
+![GARCH](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/6%20returns%20bell%20curve.jpg)
 
 ## Plot series
 We observe a time series for returns with no sign of seasonality or trend components. There is volatility clustering on certain months
 ```bash
 chartSeries(return,theme='white')
 ```
-![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/7%20chart%20series%20for%20returns.jpg)
+![GARCH](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/7%20chart%20series%20for%20returns.jpg)
 
 ## Plot for annualized volatility
 Once again, we notice very high volatility on certain months as compared to the  rest of the months
@@ -98,7 +98,7 @@ chart.RollingPerformance(R=return['2008::2020'],
                          scale=252,
                          main = 'DJI monthly volatility')
 ```
-![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/8%20annual%20volatility.jpg)
+![GARCH](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/8%20annual%20volatility.jpg)
 
 ## Build and fit the GARCH model
 Build a few variations of GARCH model and find the most accurate one by ranking them. 
@@ -135,7 +135,7 @@ In our case, with P-values <0.05, we reject the null hypothesis and conclude tha
 Information Criteria:  
 Statistical measures of fit, generally smaller values means a better model, this can be used to rank various models
 
-![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/9%20model%20output.jpg)
+![GARCH](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/9%20model%20output.jpg)
 
 ### Plot and interprete the 12 charts
 plot(m,which='all')
@@ -150,7 +150,7 @@ We observe that the columns cross the red line, which suggests the presence of s
 
 ACF plots for residuals: plots 10 and 11  
 There's much improvement as compared to ACP plots for Observations, most columns are within the red line. 
-![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/10%20plot%2012%20charts.jpg)
+![GARCH](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/10%20plot%2012%20charts.jpg)
 
 ## Continue to build and evaluate variations of GARCH models
 ### Model 2: GARCH with skewed Student t-distribution (sstd)
@@ -169,7 +169,7 @@ s=ugarchspec(mean.model = list(armaOrder=c(0,0)),
              variance.model = list(model='gjrGARCH'),
              distribution.model = 'sstd')
 ```
-![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/11%20News%20impact%20curve.jpg)
+![GARCH](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/11%20News%20impact%20curve.jpg)
 
 ### Model 4: AR(1) gjrGARCH
 Under `Optimal Parameters`, we observe that the P-value for `ar1` coefficient is less than 0.05, and conclude that it is statistically significant and results in improving the model.
@@ -178,7 +178,7 @@ s=ugarchspec(mean.model = list(armaOrder=c(1,0)),
              variance.model = list(model='gjrGARCH'),
              distribution.model = 'sstd')
 ```
-![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/12%20Model%204%20AR_1%20gjrGARCH.jpg)
+![GARCH](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/12%20Model%204%20AR_1%20gjrGARCH.jpg)
 
 ### Model 5: eGARCH
 Exponential GARCH is another model that accounts for the asymmetric effects on variance from positive vs negative shocks. 
@@ -200,11 +200,11 @@ s=ugarchspec(mean.model = list(armaOrder=c(0,0),
 
 We observe under `Optimal Parameters` that coefficient `archm` is not statistically significant, hence, the addition of this variable does not improve the model.   Disregard model 6  
 
-![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/12%20Model%205%20achm.jpg)
+![GARCH](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/12%20Model%205%20achm.jpg)
 
 For the remaining models, model 4 with the lowest `Information Criteria` measures, ranks the best fit.  
 
-![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/13%20Choose%20model_2.jpg)
+![GARCH](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/13%20Choose%20model_2.jpg)
 
 ## Model 4 is the best model
 Run simulation and store results of simulation in `sim`  
@@ -252,7 +252,7 @@ matplot(to_plot,
 legend("bottomright", inset=0.01, legend=colnames(to_plot), col=c(1:2),pch=15:19,
        bg= ("white"), horiz=F)
 ```
-![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/14%20plot_2.jpg)
+![GARCH](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/14%20plot_2.jpg)
 
 ## Model accuracy
 When comparing the error measures below, we conclude that GARCH model which takes into consideration the volatility of error variance is more accurate in predicting the Dow Jones Industrial Index. It has a lower error measure as compared to the [Facebook Prophet Model](https://github.com/Royston-Soh/dow-facebook-prophet).
@@ -260,8 +260,8 @@ When comparing the error measures below, we conclude that GARCH model which take
 round(accuracy(predicted,actuals),2)
 ```
 Accuracy for GARCH model  
-![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/15%20Accuracy.jpg)  
+![GARCH](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/15%20Accuracy.jpg)  
 
 Accuracy for Facebook Prophet model  
-![](https://github.com/Royston-Soh/dow-facebook-prophet/blob/main/pic/12%20Accuracy_test_actual%20scale.jpg)
+![GARCH](https://github.com/Royston-Soh/dow-facebook-prophet/blob/main/pic/12%20Accuracy_test_actual%20scale.jpg)
 
