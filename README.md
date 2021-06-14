@@ -25,7 +25,7 @@ dow_data=read.csv('dow_data_v3.csv',header = T,sep = ',')
 head(dow_data)
 tail(dow_data)
 ```
-![](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/1%20head_tail.jpg)
+![GARCH](https://github.com/Royston-Soh/dow-GARCH/blob/main/pic/1%20head_tail.jpg)
 
 ## Standardize the date format and convert the data to time series xts file type
 Let's use the data from year 2008 onward
